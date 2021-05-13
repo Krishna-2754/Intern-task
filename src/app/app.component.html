@@ -1,0 +1,97 @@
+<nav class="navbar navbar-expand-lg navbar-white bg-white">
+  <a class="navbar-brand" href="#">Intern Task</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <br>
+      <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Login <span class="sr-only">(current)</span></a>
+      </li>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Signup</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="container-fluid">
+
+  <div class="text-right mb-4">
+    <button class="btn btn-primary" (click)="openModal(popup, null)">
+      <i class="fa fa-plus"></i> Add
+    </button>
+  </div>
+
+  <div class="row" *ngIf="newsList.length">
+    <div class="col-md-3" *ngFor="let news of newsList">
+
+      <div class="card">
+        <div class="heading">{{news.News_Title}}</div>
+        <div class="sub-heading">{{news.News_category}}</div>
+        <div class="sub-heading">{{news.News_description}}</div>
+
+        <div class="icon">
+          <i class="fa fa-edit text-primary" (click)="openModal(popup, news.id)"></i>
+          <i class="fa fa-trash text-danger" (click)="deleteEmployee(news.id)"></i>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+<div class="card">
+  <div class="card-header">
+  </div>
+  <div class="card-body">
+    <div class="heading">{{news.News_Title}}</div>
+    <div class="sub-heading">{{news.News_category}}</div>
+    <div class="sub-heading">{{news.News_description}}</div>
+
+    
+  </div>
+</div>
+
+<ng-template #popup let-d="dismiss">
+  <div class="modal-header text-primary">
+    {{newsDetails ? 'Update' : 'Add'}} news
+  </div>
+
+  <div class="modal-body">
+    <form [formGroup]="form">
+
+      <div class="form-group">
+        <label for="News_Title">News Title</label>
+        <input id="News_Title" type="text" formControlName="News_Title"
+               class="form-control" [ngClass]="{'error-border': !form.get('News_Title').valid && form.get('News_Title').dirty}"/>
+      </div>
+
+      <div class="form-group">
+        <label for="News_category">News_category</label>
+        <input id="News_category" type="text" formControlName="News_category"
+               class="form-control" [ngClass]="{'error-border': !form.get('News_category').valid && form.get('News_category').dirty}"/>
+      </div>
+
+      <div class="form-group">
+        <label for="News_description">News_description</label>
+        <input id="News_description" type="text" formControlName="News_description"
+               class="form-control" [ngClass]="{'error-border': !form.get('News_description').valid && form.get('News_description').dirty}"/>
+      </div>
+
+    </form>
+
+    <div class="text-center">
+      <button class="btn btn-primary btn-sm pl-4 pr-4 mr-2"
+              [disabled]="!form.valid"
+              (click)="newsDetails ? updateEmployee(newsDetails.id) : addEmployee(); d()">Save</button>
+      <button class="btn btn-secondary btn-sm pl-4 pr-4 ml-2" (click)="d()">Cancel</button>
+    </div>
+  </div>
+</ng-template>
